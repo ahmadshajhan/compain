@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SDPI Mass Mailing Campaign</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --sd-color: #4CAF50;
+            --pi-color: #F44336;
+            --accent-color: #FFC107;
+            --text-color: #ffffff;
+            --bg-color: #000000;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            overflow-x: hidden;
+            position: relative;
+            min-height: 100vh;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(76, 175, 80, 0.1) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(244, 67, 54, 0.1) 0%, transparent 20%),
+                linear-gradient(to bottom, rgba(0,0,0,0.9), rgba(0,0,0,0.95));
+        }
+
+        .particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+            animation: fadeIn 1.5s ease-out;
+        }
+
+        .main-heading {
+            font-size: 4rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            background: linear-gradient(90deg, var(--sd-color), var(--accent-color), var(--pi-color));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            position: relative;
+            display: inline-block;
+            animation: colorShift 8s infinite alternate;
+        }
+
+        .main-heading span.sd {
+            color: var(--sd-color);
+        }
+
+        .main-heading span.pi {
+            color: var(--pi-color);
+        }
+
+        .subheading {
+            font-size: 1.8rem;
+            font-weight: 300;
+            margin-bottom: 2rem;
+            color: var(--accent-color);
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            position: relative;
+            display: inline-block;
+            animation: slideIn 1s ease-out;
+        }
+
+        .subheading::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--sd-color), var(--pi-color));
+            border-radius: 3px;
+        }
+
+        .hero-image {
+            width: 100%;
+            max-height: 500px;
+            object-fit: cover;
+            border-radius: 15px;
+            margin: 2rem 0;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            transform: perspective(1000px) rotateX(5deg);
+            transition: all 0.5s ease;
+            animation: float 6s ease-in-out infinite;
+            border: 5px solid rgba(255,255,255,0.1);
+        }
+
+        .hero-image:hover {
+            transform: perspective(1000px) rotateX(0deg);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.4);
+        }
+
+        .content {
+            background: rgba(30, 30, 30, 0.7);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 2.5rem;
+            margin: 3rem 0;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            border: 1px solid rgba(255,255,255,0.05);
+            animation: fadeInUp 1.5s ease-out;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .content::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(76, 175, 80, 0.1) 0%, transparent 70%);
+            animation: rotate 20s linear infinite;
+            z-index: -1;
+        }
+
+        .content::after {
+            content: '';
+            position: absolute;
+            bottom: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(244, 67, 54, 0.1) 0%, transparent 70%);
+            animation: rotate 25s linear infinite reverse;
+            z-index: -1;
+        }
+
+        .content p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+            position: relative;
+            animation: textReveal 2s ease-out;
+        }
+
+        .content p.highlight {
+            background: linear-gradient(90deg, rgba(76, 175, 80, 0.2), rgba(244, 67, 54, 0.2));
+            padding: 1rem;
+            border-left: 4px solid var(--accent-color);
+            border-radius: 0 8px 8px 0;
+            animation: highlightPulse 3s infinite;
+        }
+
+        .button-container {
+            text-align: center;
+            margin: 4rem 0;
+            animation: fadeIn 2s ease-out;
+        }
+
+        .email-button {
+            display: inline-block;
+            padding: 18px 32px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #fff;
+            background: linear-gradient(135deg, var(--sd-color), var(--pi-color));
+            border: none;
+            border-radius: 50px;
+            text-decoration: none;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+            transition: all 0.4s ease;
+            animation: pulse 2s infinite, float 4s ease-in-out infinite;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .email-button:hover {
+            background: linear-gradient(135deg, var(--pi-color), var(--sd-color));
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+            animation: none;
+        }
+
+        .email-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(255,255,255,0.2), rgba(255,255,255,0));
+            z-index: -1;
+            transition: all 0.4s ease;
+            opacity: 0;
+        }
+
+        .email-button:hover::before {
+            opacity: 1;
+        }
+
+        .email-button::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: rgba(255,255,255,0.1);
+            transform: rotate(45deg);
+            transition: all 0.6s ease;
+            z-index: -1;
+        }
+
+        .email-button:hover::after {
+            left: 100%;
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem;
+            font-size: 0.9rem;
+            color: rgba(255,255,255,0.6);
+            animation: fadeIn 2s ease-out;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes fadeInUp {
+            from { 
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to { 
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideIn {
+            from { 
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to { 
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes colorShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(76, 175, 80, 0.7); }
+            70% { box-shadow: 0 0 0 15px rgba(76, 175, 80, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(76, 175, 80, 0); }
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0px); }
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        @keyframes textReveal {
+            from { 
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            to { 
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes highlightPulse {
+            0% { box-shadow: 0 0 0 0 rgba(255, 193, 7, 0.3); }
+            70% { box-shadow: 0 0 0 10px rgba(255, 193, 7, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(255, 193, 7, 0); }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .main-heading {
+                font-size: 2.5rem;
+            }
+            
+            .subheading {
+                font-size: 1.2rem;
+            }
+            
+            .content {
+                padding: 1.5rem;
+            }
+            
+            .email-button {
+                padding: 15px 25px;
+                font-size: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .main-heading {
+                font-size: 2rem;
+            }
+            
+            .content p {
+                font-size: 1rem;
+            }
+            
+            .hero-image {
+                max-height: 300px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="particles" id="particles-js"></div>
+    
+    <div class="container">
+        <header>
+            <h1 class="main-heading">
+                <span class="sd">SD</span><span class="pi">PI</span> MASS MAILING CAMPAIGN
+            </h1>
+            <h2 class="subheading">Keezhuthoni Ward Committee</h2>
+            
+            <img src="sd.jpg" alt="Road Condition" class="hero-image">
+        </header>
+        
+        <div class="content">
+            <p>We are launching this mass mailing campaign to address the critical issue of the abandoned PMGSY road construction in Keezhuthoni Ward, Ittiva Panchayat. This vital infrastructure project, which was meant to connect several villages including Akkoanam, Pulimoodu, Kundayam, Kizhuthoni, and Aanappara, has been left incomplete, causing immense hardship to the local residents.</p>
+            
+            <p class="highlight">The road, officially named MRL08-Manjapara-Kundayam-Pulimood-Akkonam-keezhthoni-Anapara-Mukkada-Palamon Road (Balance work) under Package no: KR0667 in Kollam district, has become nearly impassable due to the contractor abandoning the work midway. This has created dangerous conditions for vehicles and pedestrians alike, especially affecting the children attending the Government LP School in the area.</p>
+            
+            <p>While two other roads under the same tender were reassigned to a new contractor through re-tendering, our road remains neglected with no progress. With the monsoon season approaching, we fear the situation will deteriorate further, potentially cutting off access for hundreds of families who depend on this route for their daily needs, medical emergencies, and school transportation.</p>
+            
+            <p>This campaign aims to flood the concerned authorities with emails demanding immediate action to resume and complete this crucial infrastructure project. We cannot afford to wait any longer while our community suffers from this neglect. Your participation in this mass mailing campaign can make a real difference in getting this work restarted.</p>
+            
+            <p>Join us in demanding accountability and action from the PMGSY authorities. Together, we can ensure that our voices are heard and that this vital road construction is completed without further delay.</p>
+        </div>
+        
+        <div class="button-container">
+            <a class="email-button" href="mailto:nrrda@pmgsy.nic.in,mail.crd@kerala.gov.in,rural.dep.connect@gmail.com?subject=Urgent%20Request%20to%20Resume%20Abandoned%20Road%20Work%20Under%20PMGSY%20in%20Kizhuthoni%20Ward%2C%20Ittiva%20Panchayat&body=Dear%20Sir%2C%0A%0AI%20am%20writing%20to%20bring%20to%20your%20immediate%20attention%20the%20dire%20condition%20of%20the%20PMGSY%20road%20passing%20through%20Akkoanam%20-%20Pulimoodu%20-%20Kundayam%20-%20Kizhuthoni%20-%20Aanappara%2C%20under%20Kizhuthoni%20Ward%20of%20Ittiva%20Panchayat%2C%20Chadayamangalam%20Block%2C%20Kollam%20district.%0A%0AName%20of%20the%20road%3A%20MRL08-Manjapara-Kundayam-Pulimood-Akkonam-keezhthoni-Anapara-Mukkada-Palamon%20Road%20(Balance%20work)%0APackage%20no%3A%20KR0667%0ADistrict%3A%20Kollam%0A%0AThe%20road%2C%20which%20also%20serves%20the%20Government%20LP%20School%20in%20the%20area%2C%20has%20become%20almost%20impassable%20due%20to%20incomplete%20construction%20work.%20The%20contractor%20who%20began%20the%20project%20abandoned%20it%20midway%2C%20leaving%20the%20road%20in%20an%20unusable%20state.%20As%20a%20result%2C%20vehicular%20movement%20has%20become%20extremely%20difficult%20and%20hazardous.%0A%0AWhile%20two%20other%20roads%20under%20the%20same%20tender%20were%20reassigned%20to%20a%20new%20contractor%20through%20re-tendering%2C%20this%20particular%20road%20remains%20neglected%2C%20with%20no%20one%20taking%20up%20the%20work.%20With%20the%20onset%20of%20the%20monsoon%2C%20the%20situation%20is%20likely%20to%20worsen%20drastically%2C%20affecting%20hundreds%20of%20families%20who%20depend%20solely%20on%20this%20road%20for%20daily%20travel.%20The%20residents%20are%20increasingly%20anxious%20and%20concerned%20about%20their%20safety%20and%20accessibility.%0A%0ATherefore%2C%20I%20kindly%20request%20that%20immediate%20steps%20be%20taken%20to%20resume%20the%20road%20work%20and%20ensure%20its%20timely%20completion.%0A%0AThank%20you%20for%20your%20attention%20to%20this%20pressing%20matter.%0A%0ASincerely%2C%0A%0A[Your%20Name]%0AWard%20Member%2C%20Kizhuthoni%20-%2018%0AIttiva%20Panchayat">
+                📩 Send Email to PMGSY Authorities
+            </a>
+        </div>
+    </div>
+    
+    <footer>
+        &copy; 2023 SDPI Keezhuthoni Ward Committee. All rights reserved.
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script>
+        // Particles.js initialization
+        particlesJS("particles-js", {
+            "particles": {
+                "number": {
+                    "value": 80,
+                    "density": {
+                        "enable": true,
+                        "value_area": 800
+                    }
+                },
+                "color": {
+                    "value": ["#4CAF50", "#F44336", "#FFC107"]
+                },
+                "shape": {
+                    "type": "circle",
+                    "stroke": {
+                        "width": 0,
+                        "color": "#000000"
+                    },
+                    "polygon": {
+                        "nb_sides": 5
+                    }
+                },
+                "opacity": {
+                    "value": 0.5,
+                    "random": true,
+                    "anim": {
+                        "enable": false,
+                        "speed": 1,
+                        "opacity_min": 0.1,
+                        "sync": false
+                    }
+                },
+                "size": {
+                    "value": 3,
+                    "random": true,
+                    "anim": {
+                        "enable": false,
+                        "speed": 40,
+                        "size_min": 0.1,
+                        "sync": false
+                    }
+                },
+                "line_linked": {
+                    "enable": true,
+                    "distance": 150,
+                    "color": "#ffffff",
+                    "opacity": 0.2,
+                    "width": 1
+                },
+                "move": {
+                    "enable": true,
+                    "speed": 2,
+                    "direction": "none",
+                    "random": true,
+                    "straight": false,
+                    "out_mode": "out",
+                    "bounce": false,
+                    "attract": {
+                        "enable": true,
+                        "rotateX": 600,
+                        "rotateY": 1200
+                    }
+                }
+            },
+            "interactivity": {
+                "detect_on": "canvas",
+                "events": {
+                    "onhover": {
+                        "enable": true,
+                        "mode": "grab"
+                    },
+                    "onclick": {
+                        "enable": true,
+                        "mode": "push"
+                    },
+                    "resize": true
+                },
+                "modes": {
+                    "grab": {
+                        "distance": 140,
+                        "line_linked": {
+                            "opacity": 0.5
+                        }
+                    },
+                    "bubble": {
+                        "distance": 400,
+                        "size": 40,
+                        "duration": 2,
+                        "opacity": 8,
+                        "speed": 3
+                    },
+                    "repulse": {
+                        "distance": 200,
+                        "duration": 0.4
+                    },
+                    "push": {
+                        "particles_nb": 4
+                    },
+                    "remove": {
+                        "particles_nb": 2
+                    }
+                }
+            },
+            "retina_detect": true
+        });
+
+        // Scroll animations
+        const animateOnScroll = () => {
+            const elements = document.querySelectorAll('.content p, .content');
+            
+            elements.forEach(element => {
+                const elementPosition = element.getBoundingClientRect().top;
+                const screenPosition = window.innerHeight / 1.3;
+                
+                if(elementPosition < screenPosition) {
+                    element.style.animation = 'fadeInUp 1s ease-out forwards';
+                }
+            });
+        };
+
+        window.addEventListener('scroll', animateOnScroll);
+        window.addEventListener('load', animateOnScroll);
+
+        // Button hover effects
+        const button = document.querySelector('.email-button');
+        
+        button.addEventListener('mouseenter', () => {
+            button.style.animation = 'none';
+        });
+        
+        button.addEventListener('mouseleave', () => {
+            button.style.animation = 'pulse 2s infinite, float 4s ease-in-out infinite';
+        });
+
+        // Color shift for heading
+        const heading = document.querySelector('.main-heading');
+        
+        setInterval(() => {
+            const hue = (Date.now() / 10000) % 360;
+            heading.style.setProperty('--accent-color', `hsl(${hue}, 80%, 60%)`);
+        }, 100);
+    </script>
+</body>
+</html>
